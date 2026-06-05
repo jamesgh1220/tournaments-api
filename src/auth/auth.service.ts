@@ -18,7 +18,11 @@ export class AuthService {
     if (exists) throw new ConflictException('Email ya registrado');
 
     const hash = await bcrypt.hash(password, 10);
-    const user = await this.usersService.create({ name, email, password: hash });
+    const user = await this.usersService.create({
+      name,
+      email,
+      password: hash,
+    });
 
     return this.buildToken(user);
   }
@@ -34,7 +38,11 @@ export class AuthService {
   }
 
   private buildToken(user: any) {
-    const payload = { sub: user.id, email: user.email, role: user.role };
+    const payload = {
+      sub: user.id,
+      email: user.email,
+      role: user.role
+    };
     return { access_token: this.jwtService.sign(payload) };
   }
 }

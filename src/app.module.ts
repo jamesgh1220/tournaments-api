@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { User } from './users/entities/user.entity';
+import { Tournament } from './tournaments/entities/tournament.entity';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { TournamentsModule } from './tournaments/tournaments.module';
@@ -19,7 +20,7 @@ import { TournamentsModule } from './tournaments/tournaments.module';
         username: cfg.get('DB_USER'),
         password: cfg.get('DB_PASS'),
         database: cfg.get('DB_NAME'),
-        entities: [User],
+        entities: [User, Tournament],
         synchronize: true,  // false en producción
       }),
     }),
