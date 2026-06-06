@@ -1,6 +1,9 @@
 import {
-  Entity, PrimaryGeneratedColumn, Column,
-  CreateDateColumn, UpdateDateColumn
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
 @Entity('users')
@@ -15,10 +18,10 @@ export class User {
   email: string;
 
   @Column()
-  password: string;  // se guarda hasheada con bcrypt
+  password: string; // se guarda hasheada con bcrypt
 
-  @Column({ default: 'user' })
-  role: string;      // 'user' | 'admin'
+  @Column()
+  role: string; // 'team' | 'admin'
 
   @CreateDateColumn()
   createdAt: Date;
