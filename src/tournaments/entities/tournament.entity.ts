@@ -18,7 +18,7 @@ export class Tournament {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 100 })
+  @Column({ unique: true, length: 100 })
   name: string;
 
   @Column({ length: 100, default: 'TO_COME' })
@@ -29,11 +29,10 @@ export class Tournament {
   })
   configuration: Record<string, any>;
 
-  @Column()
-  quantity_teams: number;
-
-  @Column()
-  qualified_teams: number;
+  @Column({
+    type: 'date',
+  })
+  startDate: Date;
 
   @CreateDateColumn()
   createdAt: Date;
@@ -41,7 +40,7 @@ export class Tournament {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToMany(() => Team, team => team.tournaments)
+  @ManyToMany(() => Team, (team) => team.tournaments)
   @JoinTable({
     name: 'tournaments_teams',
     joinColumn: {

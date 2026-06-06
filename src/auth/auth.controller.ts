@@ -6,6 +6,7 @@ class RegisterDto {
   @IsString() name: string;
   @IsEmail() email: string;
   @IsString() @MinLength(6) password: string;
+  @IsString() role: string;
 }
 class LoginDto {
   @IsEmail() email: string;
@@ -18,7 +19,7 @@ export class AuthController {
 
   @Post('register')
   register(@Body() dto: RegisterDto) {
-    return this.authService.register(dto.name, dto.email, dto.password);
+    return this.authService.register(dto.name, dto.email, dto.password, dto.role);
   }
 
   @Post('login')

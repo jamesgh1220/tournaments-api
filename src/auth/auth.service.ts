@@ -13,7 +13,7 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async register(name: string, email: string, password: string) {
+  async register(name: string, email: string, password: string, role: string) {
     const exists = await this.usersService.findByEmail(email);
     if (exists) throw new ConflictException('Email ya registrado');
 
@@ -22,6 +22,7 @@ export class AuthService {
       name,
       email,
       password: hash,
+      role,
     });
 
     return this.buildToken(user);

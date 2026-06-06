@@ -9,7 +9,7 @@ export class Team {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 100 })
+  @Column({ unique: true, length: 100 })
   name: string;
 
   @ManyToMany(() => Tournament, (tournament) => tournament.teams)
