@@ -1,6 +1,6 @@
-import { Group } from "src/groups/entities/group.entity";
-import { Phase } from "src/phase/entities/phase.entity";
-import { Team } from "src/teams/entities/teams.entity";
+import { Group } from 'src/groups/entities/group.entity';
+import { Phase } from 'src/phase/entities/phase.entity';
+import { Team } from 'src/teams/entities/teams.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -38,7 +38,7 @@ export class Match {
   @Column()
   awayScore: number;
 
-  @Column({ default: 'PENDING' })
+  @Column({ default: 'TO_COME' })
   status: string;
 
   @Column({

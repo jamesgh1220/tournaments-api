@@ -59,4 +59,9 @@ export class TournamentsController {
       dto.teamId,
     );
   }
+
+  @Post(':id/generate-fixture')
+  generateFixture(@Param('id') id: number) {
+    return this.tournamentService.generateFixture(id);
+  }
 }

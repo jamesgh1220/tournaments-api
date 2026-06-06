@@ -1,9 +1,15 @@
-import { Tournament } from "src/tournaments/entities/tournament.entity";
-import { Entity, ManyToOne, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
-import { PhaseType } from "./phase-type.entity";
-import { Group } from "src/groups/entities/group.entity";
-import { Match } from "src/matches/entities/match.entity";
-import { Standing } from "src/standings/entities/standing.entity";
+import { Tournament } from 'src/tournaments/entities/tournament.entity';
+import {
+  Entity,
+  ManyToOne,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+} from 'typeorm';
+import { PhaseType } from './phase-type.entity';
+import { Group } from 'src/groups/entities/group.entity';
+import { Match } from 'src/matches/entities/match.entity';
+import { Standing } from 'src/standings/entities/standing.entity';
 
 @Entity('phases')
 export class Phase {
@@ -13,11 +19,11 @@ export class Phase {
   @Column({ length: 100 })
   name: string;
 
-  @Column({ length: 100, default: 'PENDING' })
+  @Column({ length: 100, default: 'TO_COME' })
   status: string;
 
   @Column()
-  order_number:number;
+  order_number: number;
 
   @ManyToOne(() => Tournament, (tournament) => tournament.phases)
   tournament: Tournament;

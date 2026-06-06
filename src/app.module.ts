@@ -28,13 +28,22 @@ import { Standing } from './standings/entities/standing.entity';
       inject: [ConfigService],
       useFactory: (cfg: ConfigService) => ({
         type: 'postgres',
-        host:     cfg.get('DB_HOST'),
-        port:     cfg.get<number>('DB_PORT'),
+        host: cfg.get('DB_HOST'),
+        port: cfg.get<number>('DB_PORT'),
         username: cfg.get('DB_USER'),
         password: cfg.get('DB_PASS'),
         database: cfg.get('DB_NAME'),
-        entities: [User, Tournament, Team, Phase, PhaseType, Group, Match, Standing],
-        synchronize: true,  // false en producción
+        entities: [
+          User,
+          Tournament,
+          Team,
+          Phase,
+          PhaseType,
+          Group,
+          Match,
+          Standing,
+        ],
+        synchronize: true, // false en producción
       }),
     }),
 
