@@ -8,13 +8,19 @@ import { MatchesModule } from 'src/matches/matches.module';
 import { TournamentRepository } from './infrastructure/persistence/tournament.repository';
 import { CreateTournamentUseCase } from './application/use-cases/create-tournament.use-case';
 import { UpdateTournamentUseCase } from './application/use-cases/update-tournament.use-case';
+import { FindTournamentsUseCase } from './application/use-cases/find-tournaments.use-case';
+import { FindByIdTournamentUseCase } from './application/use-cases/find-by-id-tournament.use-case';
+import { DeleteTournamentUseCase } from './application/use-cases/delete-tournament.use-case';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Tournament, Team]), MatchesModule],
   providers: [
     TournamentsService,
+    FindTournamentsUseCase,
+    FindByIdTournamentUseCase,
     CreateTournamentUseCase,
     UpdateTournamentUseCase,
+    DeleteTournamentUseCase,
     {
       provide: 'ITournamentRepository',
       useClass: TournamentRepository,

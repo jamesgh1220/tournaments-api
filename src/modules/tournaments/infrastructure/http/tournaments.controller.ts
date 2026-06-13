@@ -3,16 +3,14 @@ import {
   UseGuards,
   Body,
   Post,
-  // Delete,
-  // Get,
+  Delete,
+  Get,
   Patch,
   Param,
 } from '@nestjs/common';
 import { JwtAuthGuard } from 'common/guards/jwt-auth-guard';
 import { TournamentsService } from '../../application/services/tournaments.service';
 import { TournamentDto } from '../../application/dto/tournament.dto';
-// import { HandleTeamToTournamentDto } from '../../application/dto/add-team-to-tournament.dto';
-// import { UpdateTournamentDto } from '../../application/dto/update-tournament.dto';
 
 @UseGuards(JwtAuthGuard)
 @Controller('tournaments')
@@ -23,25 +21,25 @@ export class TournamentsController {
   create(@Body() dto: TournamentDto) {
     return this.tournamentService.create(dto);
   }
-  // @Get()
-  // findAll() {
-  //   return this.tournamentService.findAll();
-  // }
+  @Get()
+  findAll() {
+    return this.tournamentService.find();
+  }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.tournamentService.findOne(+id);
-  // }
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.tournamentService.findById(+id);
+  }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() dto: TournamentDto) {
     return this.tournamentService.update(+id, dto);
   }
 
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.tournamentService.remove(+id);
-  // }
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.tournamentService.remove(+id);
+  }
 
   // @Post('add-team')
   // addTeamToTournament(@Body() dto: HandleTeamToTournamentDto) {

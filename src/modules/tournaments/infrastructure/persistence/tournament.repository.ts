@@ -11,6 +11,10 @@ export class TournamentRepository implements ITournamentRepository {
     private readonly tournamentRepo: Repository<Tournament>,
   ) {}
 
+  async find(): Promise<Tournament[] | []> {
+    return await this.tournamentRepo.find();
+  }
+
   async create(tournament: Tournament): Promise<Tournament> {
     return await this.tournamentRepo.save(tournament);
   }
@@ -29,5 +33,15 @@ export class TournamentRepository implements ITournamentRepository {
   ): Promise<Tournament | null> {
     await this.tournamentRepo.update(id, data);
     return await this.findById(id);
+  }
+
+  async delete(id: number): Promise<void> {
+    const tournament = await this.findById(id);
+
+    if (!tournament) {
+      throw new Error(`El tornro con id ${id} no existe`);
+    }
+
+    await this.tournamentRepo.remove(tournament);
   }
 }
