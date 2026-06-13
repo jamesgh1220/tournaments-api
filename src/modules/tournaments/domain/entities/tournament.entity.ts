@@ -59,4 +59,18 @@ export class Tournament {
 
   @OneToMany(() => Standing, (standing) => standing.tournament)
   standings: Standing[];
+
+  static create(
+    name: string,
+    state: string,
+    configuration: object,
+    startDate: Date,
+  ): Tournament {
+    const tournament = new Tournament();
+    tournament.name = name;
+    tournament.state = state || 'TO_COME';
+    tournament.configuration = configuration;
+    tournament.startDate = startDate;
+    return tournament;
+  }
 }

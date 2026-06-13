@@ -1,4 +1,4 @@
-import { Tournament } from 'src/tournaments/entities/tournament.entity';
+import { Tournament } from 'src/modules/tournaments/domain/entities/tournament.entity';
 import {
   Entity,
   ManyToOne,

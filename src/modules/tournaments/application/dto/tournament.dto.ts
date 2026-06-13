@@ -7,7 +7,7 @@ import {
   IsDateString,
 } from 'class-validator';
 
-export class CreateTournamentDto {
+export class TournamentDto {
   @IsString()
   @MinLength(2)
   name: string;

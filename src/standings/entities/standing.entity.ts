@@ -1,7 +1,7 @@
 import { Group } from "src/groups/entities/group.entity";
 import { Phase } from "src/phase/entities/phase.entity";
 import { Team } from "src/teams/entities/teams.entity";
-import { Tournament } from "src/tournaments/entities/tournament.entity";
+import { Tournament } from "src/modules/tournaments/domain/entities/tournament.entity";
 import { Entity, PrimaryGeneratedColumn, ManyToOne, Column } from "typeorm";
 
 @Entity('standings')
