@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { User } from './users/entities/user.entity';
+import { User } from './modules/users/domain/entities/user.entity';
 import { Tournament } from './tournaments/entities/tournament.entity';
-import { UsersModule } from './users/users.module';
-import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './modules/users/users.module';
 import { TournamentsModule } from './tournaments/tournaments.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -48,7 +47,6 @@ import { Standing } from './standings/entities/standing.entity';
     }),
 
     UsersModule,
-    AuthModule,
     TournamentsModule,
     TeamsModule,
     PhaseModule,
