@@ -6,6 +6,8 @@ import { UpdateTournamentUseCase } from '../use-cases/update-tournament.use-case
 import { FindTournamentsUseCase } from '../use-cases/find-tournaments.use-case';
 import { FindByIdTournamentUseCase } from '../use-cases/find-by-id-tournament.use-case';
 import { DeleteTournamentUseCase } from '../use-cases/delete-tournament.use-case';
+import { AddTeamTournamentUseCase } from 'src/modules/tournaments/application/use-cases/add-team-tournament.use-case';
+import { RemoveTeamTournamentUseCase } from '../use-cases/remove-team-tournament.use-case';
 
 @Injectable()
 export class TournamentsService {
@@ -15,6 +17,8 @@ export class TournamentsService {
     private readonly updateTournamentUseCase: UpdateTournamentUseCase,
     private readonly findByIdTournamentUseCase: FindByIdTournamentUseCase,
     private readonly deleteTournamentUseCase: DeleteTournamentUseCase,
+    private readonly addTeamTournamentUseCase: AddTeamTournamentUseCase,
+    private readonly removeTeamTournamentUseCase: RemoveTeamTournamentUseCase,
   ) {}
 
   async find(): Promise<Tournament[] | []> {
@@ -37,55 +41,19 @@ export class TournamentsService {
     await this.deleteTournamentUseCase.execute(id);
   }
 
-  // async findOne(id: number): Promise<Tournament> {
-  //   const tournament = await this.tournamentRepo.findOneBy({ id });
-  //   if (!tournament) throw new NotFoundException(`Torneo #${id} no encontrado`);
-  //   return tournament;
-  // }
+  async addTeamToTournament(
+    tournamentId: number,
+    teamId: number,
+  ): Promise<Tournament | null> {
+    return await this.addTeamTournamentUseCase.execute(tournamentId, teamId);
+  }
 
-  // async create(data: TournamentDto): Promise<Tournament> {
-  //   const tournamentExists = await this.tournamentRepo.findOne({
-  //     where: {
-  //       name: data.name,
-  //     },
-  //   });
-
-  //   if (tournamentExists) {
-  //     throw new BadRequestException(
-  //       'A tournament with that name already exists',
-  //     );
-  //   }
-
-  //   const tournament = this.tournamentRepo.create(data);
-  //   return this.tournamentRepo.save(tournament);
-  // }
-
-  // async update(id: number, data: Partial<Tournament>): Promise<Tournament> {
-  //   await this.tournamentRepo.update(id, data);
-  //   return this.findOne(id);
-  // }
-
-  // async addTeamToTournament(
-  //   tournamentId: number,
-  //   teamId: number,
-  // ): Promise<Tournament> {
-  //   const tournament = await this.tournamentRepo.findOne({
-  //     where: { id: tournamentId },
-  //     relations: {
-  //       teams: true,
-  //     },
-  //   });
-
-  //   const team = await this.teamRepo.findOneBy({ id: teamId });
-
-  //   if (!team || !tournament)
-  //     throw new NotFoundException(
-  //       `Torneo #${tournamentId} o Equipo #${teamId} no encontrado`,
-  //     );
-
-  //   tournament.teams.push(team);
-  //   return this.tournamentRepo.save(tournament);
-  // }
+  async removeTeamToTournament(
+    tournamentId: number,
+    teamId: number,
+  ): Promise<Tournament | null> {
+    return await this.removeTeamTournamentUseCase.execute(tournamentId, teamId);
+  }
 
   // async removeTeamToTournament(
   //   tournamentId: number,

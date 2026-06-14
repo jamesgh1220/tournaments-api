@@ -7,5 +7,13 @@ export interface ITournamentRepository {
   findByName(name: string): Promise<Tournament | null>;
   update(id: number, data: Partial<Tournament>): Promise<Tournament | null>;
   delete(id: number): Promise<void>;
+  addTeamToTournament(
+    tournamentId: number,
+    teamId: number,
+  ): Promise<Tournament | null>;
+  removeTeamToTournament(
+    tournamentId: number,
+    teamId: number,
+  ): Promise<Tournament | null>;
   // TODO: Agregar mas metodos
 }

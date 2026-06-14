@@ -11,6 +11,8 @@ import { UpdateTournamentUseCase } from './application/use-cases/update-tourname
 import { FindTournamentsUseCase } from './application/use-cases/find-tournaments.use-case';
 import { FindByIdTournamentUseCase } from './application/use-cases/find-by-id-tournament.use-case';
 import { DeleteTournamentUseCase } from './application/use-cases/delete-tournament.use-case';
+import { AddTeamTournamentUseCase } from './application/use-cases/add-team-tournament.use-case';
+import { RemoveTeamTournamentUseCase } from './application/use-cases/remove-team-tournament.use-case';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Tournament, Team]), MatchesModule],
@@ -21,6 +23,8 @@ import { DeleteTournamentUseCase } from './application/use-cases/delete-tourname
     CreateTournamentUseCase,
     UpdateTournamentUseCase,
     DeleteTournamentUseCase,
+    AddTeamTournamentUseCase,
+    RemoveTeamTournamentUseCase,
     {
       provide: 'ITournamentRepository',
       useClass: TournamentRepository,
