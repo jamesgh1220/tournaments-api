@@ -2,7 +2,15 @@ import { Group } from 'src/groups/entities/group.entity';
 import { Match } from 'src/matches/entities/match.entity';
 import { Standing } from 'src/standings/entities/standing.entity';
 import { Tournament } from 'src/modules/tournaments/domain/entities/tournament.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToMany,
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity('teams')
 export class Team {
@@ -26,4 +34,16 @@ export class Team {
 
   @OneToMany(() => Standing, (standing) => standing.team)
   standings: Standing[];
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  static create(name: string): Team {
+    const team = new Team();
+    team.name = name;
+    return team;
+  }
 }

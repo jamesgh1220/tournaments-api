@@ -1,6 +1,6 @@
 import { Phase } from 'src/phase/entities/phase.entity';
 import { Standing } from 'src/standings/entities/standing.entity';
-import { Team } from 'src/teams/entities/teams.entity';
+import { Team } from 'src/modules/teams/domain/entities/teams.entity';
 
 import {
   Entity,

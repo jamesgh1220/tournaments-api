@@ -39,7 +39,7 @@ export class TournamentRepository implements ITournamentRepository {
     const tournament = await this.findById(id);
 
     if (!tournament) {
-      throw new Error(`El tornro con id ${id} no existe`);
+      throw new Error(`El torneo con id ${id} no existe`);
     }
 
     await this.tournamentRepo.remove(tournament);

@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import { CreateMatchDto } from './dto/create-match.dto';
 import { Group } from 'src/groups/entities/group.entity';
 import { Phase } from 'src/phase/entities/phase.entity';
-import { Team } from 'src/teams/entities/teams.entity';
+import { Team } from 'src/modules/teams/domain/entities/teams.entity';
 
 @Injectable()
 export class MatchesService {

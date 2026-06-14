@@ -1,4 +1,4 @@
-import { Team } from 'src/teams/entities/teams.entity';
+import { Team } from 'src/modules/teams/domain/entities/teams.entity';
 import { Fixture } from '../../interfaces/fixture/match-fixture';
 
 export class TournamentEngine {

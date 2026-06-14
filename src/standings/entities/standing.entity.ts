@@ -1,6 +1,6 @@
 import { Group } from "src/groups/entities/group.entity";
 import { Phase } from "src/phase/entities/phase.entity";
-import { Team } from "src/teams/entities/teams.entity";
+import { Team } from "src/modules/teams/domain/entities/teams.entity";
 import { Tournament } from "src/modules/tournaments/domain/entities/tournament.entity";
 import { Entity, PrimaryGeneratedColumn, ManyToOne, Column } from "typeorm";
 

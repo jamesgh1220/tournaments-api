@@ -21,6 +21,7 @@ export class TournamentsController {
   create(@Body() dto: TournamentDto) {
     return this.tournamentService.create(dto);
   }
+
   @Get()
   findAll() {
     return this.tournamentService.find();
