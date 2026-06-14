@@ -3,7 +3,7 @@ import { TournamentDto } from '../dto/tournament.dto';
 import { Tournament } from '../../domain/entities/tournament.entity';
 import type { ITournamentRepository } from '../../domain/interfaces/tournament-repository.interface';
 import { Name } from '../../domain/value-objects/name.vo';
-import { MatchDate } from '../../domain/value-objects/date.vo';
+import { MatchDate } from '../../domain/value-objects/match-date.vo';
 
 @Injectable()
 export class UpdateTournamentUseCase {
@@ -16,15 +16,11 @@ export class UpdateTournamentUseCase {
     const name = new Name(dto.name);
     const startDate = new MatchDate(new Date(dto.startDate));
 
-    const editTournament = Tournament.create(
-      name.value,
-      dto.state,
-      dto.configuration,
-      startDate.value,
-    );
-
-    const tournament = await this.tournamentRepo.update(id, editTournament);
-
-    return tournament;
+    return await this.tournamentRepo.update(id, {
+      name: name.value,
+      state: dto.state,
+      configuration: dto.configuration,
+      startDate: startDate.value,
+    });
   }
 }

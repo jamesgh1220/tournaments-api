@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import { CreateMatchDto } from './dto/create-match.dto';
 import { Group } from 'src/groups/entities/group.entity';
 import { Phase } from 'src/phase/entities/phase.entity';
-import { Team } from 'src/modules/teams/domain/entities/teams.entity';
+import { TeamOrmEntity } from 'src/modules/teams/infrastructure/persistence/team.orm-entity';
 
 @Injectable()
 export class MatchesService {
@@ -27,8 +27,8 @@ export class MatchesService {
   create(data: CreateMatchDto): Promise<Match> {
     const match = this.repo.create({
       phase: { id: data.phaseId },
-      homeTeam: { id: data.homeTeamId },
-      awayTeam: { id: data.awayTeamId },
+      homeTeam: { id: data.homeTeamId } as TeamOrmEntity,
+      awayTeam: { id: data.awayTeamId } as TeamOrmEntity,
       homeScore: data.homeScore ?? 0,
       awayScore: data.awayScore ?? 0,
       status: data.status ?? 'TO_COME',
@@ -47,8 +47,8 @@ export class MatchesService {
 
     match.phase = { id: data.phaseId } as Phase;
     match.group = { id: data.groupId } as Group;
-    match.homeTeam = { id: data.homeTeamId } as Team;
-    match.awayTeam = { id: data.awayTeamId } as Team;
+    match.homeTeam = { id: data.homeTeamId } as TeamOrmEntity;
+    match.awayTeam = { id: data.awayTeamId } as TeamOrmEntity;
     match.homeScore = data.homeScore ?? 0;
     match.awayScore = data.awayScore ?? 0;
     match.status = data.status ?? 'TO_COME';

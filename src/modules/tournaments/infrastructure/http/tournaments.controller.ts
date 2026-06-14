@@ -11,7 +11,6 @@ import {
 import { JwtAuthGuard } from 'common/guards/jwt-auth-guard';
 import { TournamentsService } from '../../application/services/tournaments.service';
 import { TournamentDto } from '../../application/dto/tournament.dto';
-import { HandleTeamToTournamentDto } from '../../application/dto/add-team-to-tournament.dto';
 
 @UseGuards(JwtAuthGuard)
 @Controller('tournaments')
@@ -43,24 +42,16 @@ export class TournamentsController {
     return this.tournamentService.remove(+id);
   }
 
-  @Post('add-team')
-  addTeamToTournament(@Body() dto: HandleTeamToTournamentDto) {
-    return this.tournamentService.addTeamToTournament(
-      dto.tournamentId,
-      dto.teamId,
-    );
+  @Post(':id/teams')
+  addTeamToTournament(@Param('id') id: string, @Body('teamId') teamId: number) {
+    return this.tournamentService.addTeamToTournament(+id, +teamId);
   }
 
-  @Post('remove-team')
-  removeTeamToTournament(@Body() dto: HandleTeamToTournamentDto) {
-    return this.tournamentService.removeTeamToTournament(
-      dto.tournamentId,
-      dto.teamId,
-    );
+  @Delete(':id/teams/:teamId')
+  removeTeamFromTournament(
+    @Param('id') id: string,
+    @Param('teamId') teamId: string,
+  ) {
+    return this.tournamentService.removeTeamFromTournament(+id, +teamId);
   }
-
-  // @Post(':id/generate-fixture')
-  // generateFixture(@Param('id') id: number) {
-  //   return this.tournamentService.generateFixture(id);
-  // }
 }

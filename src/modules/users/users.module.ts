@@ -4,7 +4,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
-import { User } from './domain/entities/user.entity';
+import { UserOrmEntity } from './infrastructure/persistence/user.orm-entity';
 import { RegisterUserUseCase } from './application/use-cases/register-user.use-case';
 import { LoginUserUseCase } from './application/use-cases/login-user.use-case';
 import { UsersService } from './application/services/user.service';
@@ -15,7 +15,7 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 @Module({
   imports: [
     ConfigModule,
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([UserOrmEntity]),
     PassportModule,
     JwtModule.registerAsync({
       inject: [ConfigService],
@@ -36,6 +36,6 @@ import { JwtStrategy } from './strategies/jwt.strategy';
     },
   ],
   controllers: [UsersController],
-  exports: [UsersService, PassportModule], // AuthService necesita esto
+  exports: [UsersService, PassportModule],
 })
 export class UsersModule {}

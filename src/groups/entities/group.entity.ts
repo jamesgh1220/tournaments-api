@@ -1,7 +1,6 @@
 import { Match } from 'src/matches/entities/match.entity';
 import { Phase } from 'src/phase/entities/phase.entity';
 import { Standing } from 'src/standings/entities/standing.entity';
-import { Team } from 'src/modules/teams/domain/entities/teams.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -13,6 +12,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { TeamOrmEntity } from 'src/modules/teams/infrastructure/persistence/team.orm-entity';
 
 @Entity('groups')
 export class Group {
@@ -25,7 +25,7 @@ export class Group {
   @ManyToOne(() => Phase, (phase) => phase.groups)
   phase: Phase;
 
-  @ManyToMany(() => Team, team => team.groups)
+  @ManyToMany(() => TeamOrmEntity, team => team.groups)
   @JoinTable({
     name: 'group_teams',
     joinColumn: {
@@ -37,7 +37,7 @@ export class Group {
       referencedColumnName: 'id',
     },
   })
-  teams: Team[];
+  teams: TeamOrmEntity[];
 
   @OneToMany(() => Match, (match) => match.group)
   matches: Match[];

@@ -1,6 +1,5 @@
 import { Group } from 'src/groups/entities/group.entity';
 import { Phase } from 'src/phase/entities/phase.entity';
-import { Team } from 'src/modules/teams/domain/entities/teams.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -10,6 +9,7 @@ import {
   UpdateDateColumn,
   JoinColumn,
 } from 'typeorm';
+import { TeamOrmEntity } from 'src/modules/teams/infrastructure/persistence/team.orm-entity';
 
 @Entity('matches')
 export class Match {
@@ -24,13 +24,13 @@ export class Match {
   })
   group: Group;
 
-  @ManyToOne(() => Team, (team) => team.homeMatches)
+  @ManyToOne(() => TeamOrmEntity, (team) => team.homeMatches)
   @JoinColumn({ name: 'homeTeamId' })
-  homeTeam: Team;
+  homeTeam: TeamOrmEntity;
 
-  @ManyToOne(() => Team, (team) => team.awayMatches)
+  @ManyToOne(() => TeamOrmEntity, (team) => team.awayMatches)
   @JoinColumn({ name: 'awayTeamId' })
-  awayTeam: Team;
+  awayTeam: TeamOrmEntity;
 
   @Column()
   homeScore: number;
@@ -41,9 +41,7 @@ export class Match {
   @Column({ default: 'TO_COME' })
   status: string;
 
-  @Column({
-    type: 'date',
-  })
+  @Column({ type: 'date' })
   scheduledAt: Date;
 
   @CreateDateColumn()

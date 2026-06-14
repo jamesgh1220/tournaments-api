@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Tournament } from 'src/modules/tournaments/domain/entities/tournament.entity';
-import type { ITournamentRepository } from 'src/modules/tournaments/domain/interfaces/tournament-repository.interface';
+import { Tournament } from '../../domain/entities/tournament.entity';
+import type { ITournamentRepository } from '../../domain/interfaces/tournament-repository.interface';
 
 @Injectable()
-export class RemoveTeamTournamentUseCase {
+export class RemoveTeamFromTournamentUseCase {
   constructor(
     @Inject('ITournamentRepository')
     private readonly tournamentRepo: ITournamentRepository,
@@ -13,7 +13,7 @@ export class RemoveTeamTournamentUseCase {
     tournamentId: number,
     teamId: number,
   ): Promise<Tournament | null> {
-    return await this.tournamentRepo.removeTeamToTournament(
+    return await this.tournamentRepo.removeTeamFromTournament(
       tournamentId,
       teamId,
     );

@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TeamsController } from './infrastructure/http/teams.controller';
 import { TeamsService } from './application/services/teams.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Team } from './domain/entities/teams.entity';
+import { TeamOrmEntity } from './infrastructure/persistence/team.orm-entity';
 import { TeamRepository } from './infrastructure/persistence/team.repository';
 import { CreateTeamUseCase } from './application/use-cases/create-team.use-case';
 import { DeleteTeamUseCase } from './application/use-cases/delete-team.use-case';
@@ -11,7 +11,7 @@ import { FindTeamsUseCase } from './application/use-cases/find-teams.use-case';
 import { UpdateTeamUseCase } from './application/use-cases/update-team.use-case';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Team])],
+  imports: [TypeOrmModule.forFeature([TeamOrmEntity])],
   controllers: [TeamsController],
   providers: [
     CreateTeamUseCase,

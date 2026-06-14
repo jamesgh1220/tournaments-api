@@ -1,4 +1,3 @@
-import { Tournament } from 'src/modules/tournaments/domain/entities/tournament.entity';
 import {
   Entity,
   ManyToOne,
@@ -10,6 +9,7 @@ import { PhaseType } from './phase-type.entity';
 import { Group } from 'src/groups/entities/group.entity';
 import { Match } from 'src/matches/entities/match.entity';
 import { Standing } from 'src/standings/entities/standing.entity';
+import { TournamentOrmEntity } from 'src/modules/tournaments/infrastructure/persistence/tournament.orm-entity';
 
 @Entity('phases')
 export class Phase {
@@ -25,8 +25,8 @@ export class Phase {
   @Column()
   order_number: number;
 
-  @ManyToOne(() => Tournament, (tournament) => tournament.phases)
-  tournament: Tournament;
+  @ManyToOne(() => TournamentOrmEntity, (tournament) => tournament.phases)
+  tournament: TournamentOrmEntity;
 
   @ManyToOne(() => PhaseType, (type) => type.phases)
   type: PhaseType;

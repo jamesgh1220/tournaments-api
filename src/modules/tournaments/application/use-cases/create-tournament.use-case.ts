@@ -3,7 +3,7 @@ import { TournamentDto } from '../dto/tournament.dto';
 import { Tournament } from '../../domain/entities/tournament.entity';
 import type { ITournamentRepository } from '../../domain/interfaces/tournament-repository.interface';
 import { Name } from '../../domain/value-objects/name.vo';
-import { MatchDate } from '../../domain/value-objects/date.vo';
+import { MatchDate } from '../../domain/value-objects/match-date.vo';
 
 @Injectable()
 export class CreateTournamentUseCase {

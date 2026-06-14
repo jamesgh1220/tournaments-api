@@ -6,8 +6,8 @@ import { UpdateTournamentUseCase } from '../use-cases/update-tournament.use-case
 import { FindTournamentsUseCase } from '../use-cases/find-tournaments.use-case';
 import { FindByIdTournamentUseCase } from '../use-cases/find-by-id-tournament.use-case';
 import { DeleteTournamentUseCase } from '../use-cases/delete-tournament.use-case';
-import { AddTeamTournamentUseCase } from 'src/modules/tournaments/application/use-cases/add-team-tournament.use-case';
-import { RemoveTeamTournamentUseCase } from '../use-cases/remove-team-tournament.use-case';
+import { AddTeamTournamentUseCase } from './../use-cases/add-team-tournament.use-case';
+import { RemoveTeamFromTournamentUseCase } from './../use-cases/remove-team-from-tournament.use-case';
 
 @Injectable()
 export class TournamentsService {
@@ -18,7 +18,7 @@ export class TournamentsService {
     private readonly findByIdTournamentUseCase: FindByIdTournamentUseCase,
     private readonly deleteTournamentUseCase: DeleteTournamentUseCase,
     private readonly addTeamTournamentUseCase: AddTeamTournamentUseCase,
-    private readonly removeTeamTournamentUseCase: RemoveTeamTournamentUseCase,
+    private readonly removeTeamFromTournamentUseCase: RemoveTeamFromTournamentUseCase,
   ) {}
 
   async find(): Promise<Tournament[] | []> {
@@ -48,73 +48,13 @@ export class TournamentsService {
     return await this.addTeamTournamentUseCase.execute(tournamentId, teamId);
   }
 
-  async removeTeamToTournament(
+  async removeTeamFromTournament(
     tournamentId: number,
     teamId: number,
   ): Promise<Tournament | null> {
-    return await this.removeTeamTournamentUseCase.execute(tournamentId, teamId);
+    return await this.removeTeamFromTournamentUseCase.execute(
+      tournamentId,
+      teamId,
+    );
   }
-
-  // async removeTeamToTournament(
-  //   tournamentId: number,
-  //   teamId: number,
-  // ): Promise<Tournament> {
-  //   const tournament = await this.tournamentRepo.findOne({
-  //     where: { id: tournamentId },
-  //     relations: {
-  //       teams: true,
-  //     },
-  //   });
-
-  //   if (!tournament) {
-  //     throw new NotFoundException(`Torneo #${tournamentId} no encontrado`);
-  //   }
-
-  //   const teamExistsInTournament = tournament.teams.some(
-  //     (team) => team.id === teamId,
-  //   );
-
-  //   if (!teamExistsInTournament) {
-  //     throw new NotFoundException(
-  //       `El equipo #${teamId} no pertenece al torneo #${tournamentId}`,
-  //     );
-  //   }
-
-  //   tournament.teams = tournament.teams.filter((team) => team.id !== teamId);
-
-  //   return this.tournamentRepo.save(tournament);
-  // }
-
-  // async generateFixture(id: number): Promise<Tournament> {
-  //   const tournamentEngine = new TournamentEngine();
-  //   const tournamentId = id;
-  //   const tournament = await this.tournamentRepo.findOne({
-  //     where: { id: tournamentId },
-  //     relations: {
-  //       teams: true,
-  //     },
-  //   });
-
-  //   if (!tournament)
-  //     throw new NotFoundException(`Torneo #${tournamentId} no encontrado`);
-
-  //   const fixture: Fixture = tournamentEngine.generateFixture(
-  //     tournament.configuration,
-  //     tournament.teams,
-  //   );
-
-  //   for (let index = 0; index < fixture.matches.length; index++) {
-  //     const match = fixture.matches[index];
-  //     await this.matchesService.create({
-  //       phaseId: 2,
-  //       homeTeamId: match.homeTeam,
-  //       awayTeamId: match.awayTeam,
-  //       homeScore: 0,
-  //       awayScore: 0,
-  //       scheduledAt: '2026-06-11',
-  //     });
-  //   }
-
-  //   return tournament;
-  // }
 }

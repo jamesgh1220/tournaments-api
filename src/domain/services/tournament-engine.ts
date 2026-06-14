@@ -21,15 +21,15 @@ export class TournamentEngine {
       const singleTeam = teams[i];
       for (let j = 1; j < allTeams.length; j++) {
         fixture.matches.push({
-          homeTeam: singleTeam.id,
-          awayTeam: allTeams[j].id,
+          homeTeam: singleTeam.id!,
+          awayTeam: allTeams[j].id!,
         });
         fixture.matches.push({
-          homeTeam: allTeams[j].id,
-          awayTeam: singleTeam.id,
+          homeTeam: allTeams[j].id!,
+          awayTeam: singleTeam.id!,
         });
       }
-      allTeams = allTeams.filter((team) => team.id !== singleTeam.id);
+      allTeams = allTeams.filter((team) => team.id !== singleTeam.id!);
     }
 
     return fixture;

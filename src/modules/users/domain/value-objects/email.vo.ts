@@ -1,11 +1,18 @@
-export class Email {
-  readonly value: string;
+import { ValueObject } from './base.vo';
 
+export class InvalidEmailError extends Error {
+  constructor() {
+    super('El email no tiene un formato válido');
+    this.name = 'InvalidEmailError';
+  }
+}
+
+export class Email extends ValueObject<string> {
   constructor(email: string) {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email || !regex.test(email)) {
-      throw new Error('El email no tiene un formato válido');
+      throw new InvalidEmailError();
     }
-    this.value = email.toLowerCase().trim();
+    super(email.toLowerCase().trim());
   }
 }

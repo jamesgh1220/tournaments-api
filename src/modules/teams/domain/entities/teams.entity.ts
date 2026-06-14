@@ -1,45 +1,8 @@
-import { Group } from 'src/groups/entities/group.entity';
-import { Match } from 'src/matches/entities/match.entity';
-import { Standing } from 'src/standings/entities/standing.entity';
-import { Tournament } from 'src/modules/tournaments/domain/entities/tournament.entity';
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToMany,
-  OneToMany,
-  CreateDateColumn,
-  UpdateDateColumn,
-} from 'typeorm';
-
-@Entity('teams')
 export class Team {
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @Column({ unique: true, length: 100 })
+  id?: number;
   name: string;
-
-  @ManyToMany(() => Tournament, (tournament) => tournament.teams)
-  tournaments: Tournament[];
-
-  @ManyToMany(() => Group, (group) => group.teams)
-  groups: Group[];
-
-  @OneToMany(() => Match, (match) => match.homeTeam)
-  homeMatches: Match[];
-
-  @OneToMany(() => Match, (match) => match.awayTeam)
-  awayMatches: Match[];
-
-  @OneToMany(() => Standing, (standing) => standing.team)
-  standings: Standing[];
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 
   static create(name: string): Team {
     const team = new Team();
