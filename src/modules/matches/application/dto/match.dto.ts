@@ -7,7 +7,7 @@ import {
   IsIn,
 } from 'class-validator';
 
-export class CreateMatchDto {
+export class MatchDto {
   @IsInt()
   @IsPositive()
   phaseId: number;
@@ -15,7 +15,7 @@ export class CreateMatchDto {
   @IsOptional()
   @IsInt()
   @IsPositive()
-  groupId?: number;
+  groupId: number;
 
   @IsInt()
   @IsPositive()
@@ -27,15 +27,15 @@ export class CreateMatchDto {
 
   @IsOptional()
   @IsInt()
-  homeScore?: number;
+  homeScore: number;
 
   @IsOptional()
   @IsInt()
-  awayScore?: number;
+  awayScore: number;
 
   @IsString()
   @IsIn(['TO_COME', 'FINISHED'])
-  status?: string;
+  status: string;
 
   @IsDateString()
   scheduledAt: string;

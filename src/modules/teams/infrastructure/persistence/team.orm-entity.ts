@@ -1,5 +1,4 @@
 import { Group } from 'src/groups/entities/group.entity';
-import { Match } from 'src/matches/entities/match.entity';
 import { Standing } from 'src/standings/entities/standing.entity';
 import {
   Entity,
@@ -11,6 +10,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { TournamentOrmEntity } from 'src/modules/tournaments/infrastructure/persistence/tournament.orm-entity';
+import { MatchOrmEntity } from 'src/modules/matches/infrastructure/persistence/match.orm-entity';
 
 @Entity('teams')
 export class TeamOrmEntity {
@@ -26,11 +26,11 @@ export class TeamOrmEntity {
   @ManyToMany(() => Group, (group) => group.teams)
   groups: Group[];
 
-  @OneToMany(() => Match, (match) => match.homeTeam)
-  homeMatches: Match[];
+  @OneToMany(() => MatchOrmEntity, (match) => match.homeTeam)
+  homeMatches: MatchOrmEntity[];
 
-  @OneToMany(() => Match, (match) => match.awayTeam)
-  awayMatches: Match[];
+  @OneToMany(() => MatchOrmEntity, (match) => match.awayTeam)
+  awayMatches: MatchOrmEntity[];
 
   @OneToMany(() => Standing, (standing) => standing.team)
   standings: Standing[];

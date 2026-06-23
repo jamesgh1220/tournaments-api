@@ -15,5 +15,4 @@ export interface ITournamentRepository {
     tournamentId: number,
     teamId: number,
   ): Promise<Tournament | null>;
-  // TODO: Agregar mas metodos
 }

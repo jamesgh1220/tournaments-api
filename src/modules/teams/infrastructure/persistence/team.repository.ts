@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Team } from '../../domain/entities/teams.entity';
 import { TeamOrmEntity } from './team.orm-entity';
+import { TeamMapper } from './team.mapper';
 import type { ITeamRepository } from '../../domain/interfaces/team-repository.interface';
 
 @Injectable()
@@ -13,33 +14,40 @@ export class TeamRepository implements ITeamRepository {
   ) {}
 
   async find(): Promise<Team[]> {
-    return await this.teamRepo.find();
+    const ormEntities = await this.teamRepo.find();
+    return ormEntities.map(TeamMapper.toDomain);
   }
 
   async create(team: Team): Promise<Team> {
-    return await this.teamRepo.save(team);
+    const ormEntity = TeamMapper.toOrm(team);
+    const saved = await this.teamRepo.save(ormEntity);
+    return TeamMapper.toDomain(saved);
   }
 
   async findById(id: number): Promise<Team | null> {
-    return await this.teamRepo.findOne({ where: { id } });
+    const ormEntity = await this.teamRepo.findOneBy({ id });
+    return ormEntity ? TeamMapper.toDomain(ormEntity) : null;
   }
 
   async findByName(name: string): Promise<Team | null> {
-    return await this.teamRepo.findOne({ where: { name } });
+    const ormEntity = await this.teamRepo.findOneBy({ name });
+    return ormEntity ? TeamMapper.toDomain(ormEntity) : null;
   }
 
   async update(id: number, data: Partial<Team>): Promise<Team | null> {
-    await this.teamRepo.update(id, data);
-    return this.findById(id);
+    const orm = await this.teamRepo.findOneBy({ id });
+    if (!orm) return null;
+
+    if (data.name !== undefined) orm.name = data.name;
+
+    const saved = await this.teamRepo.save(orm);
+    return TeamMapper.toDomain(saved);
   }
 
   async delete(id: number): Promise<void> {
-    const orm = await this.teamRepo.findOne({ where: { id } });
-
-    if (!orm) {
-      throw new Error(`El equipo con id ${id} no existe`);
+    const result = await this.teamRepo.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`Team with id ${id} not found`);
     }
-
-    await this.teamRepo.remove(orm);
   }
 }

@@ -2,7 +2,7 @@ import { Team } from 'src/modules/teams/domain/entities/teams.entity';
 import { Fixture } from '../../interfaces/fixture/match-fixture';
 
 export class TournamentEngine {
-  generateFixture(config: any, teams: any) {
+  generateFixture(config: any, teams: Team[]) {
     switch (config.type) {
       case 'LEAGUE':
         return this.engineLeague(teams);

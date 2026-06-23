@@ -1,5 +1,4 @@
 import { Group } from 'src/groups/entities/group.entity';
-import { Phase } from 'src/phase/entities/phase.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -10,24 +9,33 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { TeamOrmEntity } from 'src/modules/teams/infrastructure/persistence/team.orm-entity';
+import { PhaseOrmEntity } from 'src/modules/phase/infrastructure/persistence/phase.orm-entity';
 
 @Entity('matches')
-export class Match {
+export class MatchOrmEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Phase, (phase) => phase.matches)
-  phase: Phase;
+  @Column()
+  phaseId: number;
+  @ManyToOne(() => PhaseOrmEntity, (phase) => phase.matches)
+  phase: PhaseOrmEntity;
 
+  @Column({ nullable: true })
+  groupId?: number;
   @ManyToOne(() => Group, (group) => group.matches, {
     nullable: true,
   })
   group: Group;
 
+  @Column()
+  homeTeamId: number;
   @ManyToOne(() => TeamOrmEntity, (team) => team.homeMatches)
   @JoinColumn({ name: 'homeTeamId' })
   homeTeam: TeamOrmEntity;
 
+  @Column()
+  awayTeamId: number;
   @ManyToOne(() => TeamOrmEntity, (team) => team.awayMatches)
   @JoinColumn({ name: 'awayTeamId' })
   awayTeam: TeamOrmEntity;

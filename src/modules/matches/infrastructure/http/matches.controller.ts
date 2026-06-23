@@ -7,8 +7,8 @@ import {
   Param,
   Body,
 } from '@nestjs/common';
-import { MatchesService } from './matches.service';
-import { CreateMatchDto } from './dto/create-match.dto';
+import { MatchesService } from '../../application/services/matches.service';
+import { MatchDto } from '../../application/dto/match.dto';
 
 @Controller('matches')
 export class MatchesController {
@@ -16,21 +16,21 @@ export class MatchesController {
 
   @Get()
   findAll() {
-    return this.matchService.findAll();
+    // return this.matchService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.matchService.findOne(+id);
+    // return this.matchService.findOne(+id);
   }
 
   @Post()
-  create(@Body() dto: CreateMatchDto) {
+  create(@Body() dto: MatchDto) {
     return this.matchService.create(dto);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() dto: CreateMatchDto) {
+  update(@Param('id') id: string, @Body() dto: MatchDto) {
     return this.matchService.update(+id, dto);
   }
 

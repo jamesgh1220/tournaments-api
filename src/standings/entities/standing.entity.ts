@@ -1,8 +1,8 @@
 import { Group } from "src/groups/entities/group.entity";
-import { Phase } from "src/phase/entities/phase.entity";
 import { Entity, PrimaryGeneratedColumn, ManyToOne, Column } from "typeorm";
 import { TournamentOrmEntity } from "src/modules/tournaments/infrastructure/persistence/tournament.orm-entity";
 import { TeamOrmEntity } from "src/modules/teams/infrastructure/persistence/team.orm-entity";
+import { PhaseOrmEntity } from "src/modules/phase/infrastructure/persistence/phase.orm-entity";
 
 @Entity('standings')
 export class Standing {
@@ -12,8 +12,8 @@ export class Standing {
   @ManyToOne(() => TournamentOrmEntity, (tournament) => tournament.standings)
   tournament: TournamentOrmEntity;
 
-  @ManyToOne(() => Phase, (phase) => phase.standings)
-  phase: Phase;
+  @ManyToOne(() => PhaseOrmEntity, (phase) => phase.standings)
+  phase: PhaseOrmEntity;
 
   @ManyToOne(() => Group, (group) => group.standings, {
     nullable: true,

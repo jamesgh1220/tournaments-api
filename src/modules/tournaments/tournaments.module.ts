@@ -4,7 +4,7 @@ import { TournamentOrmEntity } from './infrastructure/persistence/tournament.orm
 import { TournamentsService } from './application/services/tournaments.service';
 import { TournamentsController } from './infrastructure/http/tournaments.controller';
 import { TeamOrmEntity } from 'src/modules/teams/infrastructure/persistence/team.orm-entity';
-import { MatchesModule } from 'src/matches/matches.module';
+import { MatchesModule } from 'src/modules/matches/matches.module';
 import { TournamentRepository } from './infrastructure/persistence/tournament.repository';
 import { CreateTournamentUseCase } from './application/use-cases/create-tournament.use-case';
 import { UpdateTournamentUseCase } from './application/use-cases/update-tournament.use-case';
@@ -15,7 +15,10 @@ import { AddTeamTournamentUseCase } from './application/use-cases/add-team-tourn
 import { RemoveTeamFromTournamentUseCase } from './application/use-cases/remove-team-from-tournament.use-case';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([TournamentOrmEntity, TeamOrmEntity]), MatchesModule],
+  imports: [
+    TypeOrmModule.forFeature([TournamentOrmEntity, TeamOrmEntity]),
+    MatchesModule,
+  ],
   providers: [
     TournamentsService,
     FindTournamentsUseCase,

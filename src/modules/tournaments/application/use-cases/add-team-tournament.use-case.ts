@@ -13,6 +13,7 @@ export class AddTeamTournamentUseCase {
     tournamentId: number,
     teamId: number,
   ): Promise<Tournament | null> {
+    // TODO: validar que no se agreguen mas equipos de los establecidos (value-object)
     return await this.tournamentRepo.addTeamToTournament(tournamentId, teamId);
   }
 }

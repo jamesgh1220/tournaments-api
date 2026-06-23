@@ -4,15 +4,16 @@ import {
   Column,
   PrimaryGeneratedColumn,
   OneToMany,
+  JoinColumn,
 } from 'typeorm';
-import { PhaseType } from './phase-type.entity';
+import { PhaseTypeOrmEntity } from './phase-type.orm-entity';
 import { Group } from 'src/groups/entities/group.entity';
-import { Match } from 'src/matches/entities/match.entity';
 import { Standing } from 'src/standings/entities/standing.entity';
 import { TournamentOrmEntity } from 'src/modules/tournaments/infrastructure/persistence/tournament.orm-entity';
+import { MatchOrmEntity } from 'src/modules/matches/infrastructure/persistence/match.orm-entity';
 
 @Entity('phases')
-export class Phase {
+export class PhaseOrmEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -25,17 +26,23 @@ export class Phase {
   @Column()
   order_number: number;
 
+  @Column()
+  tournamentId: number;
   @ManyToOne(() => TournamentOrmEntity, (tournament) => tournament.phases)
+  @JoinColumn({ name: 'tournamentId' })
   tournament: TournamentOrmEntity;
 
-  @ManyToOne(() => PhaseType, (type) => type.phases)
-  type: PhaseType;
+  @Column()
+  typeId: number;
+  @ManyToOne(() => PhaseTypeOrmEntity, (type) => type.phases)
+  @JoinColumn({ name: 'typeId' })
+  type: PhaseTypeOrmEntity;
 
   @OneToMany(() => Group, (group) => group.phase)
   groups: Group[];
 
-  @OneToMany(() => Match, (match) => match.phase)
-  matches: Match[];
+  @OneToMany(() => MatchOrmEntity, (match) => match.phase)
+  matches: MatchOrmEntity[];
 
   @OneToMany(() => Standing, (standing) => standing.phase)
   standings: Standing[];

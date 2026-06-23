@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Tournament } from '../../domain/entities/tournament.entity';
 import { TournamentOrmEntity } from './tournament.orm-entity';
+import { TournamentMapper } from './tournament.mapper';
 import type { ITournamentRepository } from '../../domain/interfaces/tournament-repository.interface';
 import { TeamOrmEntity } from 'src/modules/teams/infrastructure/persistence/team.orm-entity';
 
@@ -16,49 +17,55 @@ export class TournamentRepository implements ITournamentRepository {
   ) {}
 
   async find(): Promise<Tournament[]> {
-    return await this.tournamentRepo.find({
+    const ormEntities = await this.tournamentRepo.find({
       relations: { teams: true },
     });
+    return ormEntities.map(TournamentMapper.toDomain);
   }
 
   async create(tournament: Tournament): Promise<Tournament> {
-    return await this.tournamentRepo.save(tournament);
+    const ormEntity = TournamentMapper.toOrm(tournament);
+    const saved = await this.tournamentRepo.save(ormEntity);
+    return TournamentMapper.toDomain(saved);
   }
 
   async findById(id: number): Promise<Tournament | null> {
-    return await this.tournamentRepo.findOne({
-      where: { id },
-    });
+    const ormEntity = await this.tournamentRepo.findOneBy({ id });
+    return ormEntity ? TournamentMapper.toDomain(ormEntity) : null;
   }
 
   async findByName(name: string): Promise<Tournament | null> {
-    return await this.tournamentRepo.findOne({
-      where: { name },
-    });
+    const ormEntity = await this.tournamentRepo.findOneBy({ name });
+    return ormEntity ? TournamentMapper.toDomain(ormEntity) : null;
   }
 
   async update(
     id: number,
     data: Partial<Tournament>,
   ): Promise<Tournament | null> {
-    await this.tournamentRepo.update(id, data);
-    return this.findById(id);
+    const orm = await this.tournamentRepo.findOneBy({ id });
+    if (!orm) return null;
+
+    if (data.name !== undefined) orm.name = data.name;
+    if (data.state !== undefined) orm.state = data.state;
+    if (data.configuration !== undefined) orm.configuration = data.configuration;
+    if (data.startDate !== undefined) orm.startDate = data.startDate;
+
+    const saved = await this.tournamentRepo.save(orm);
+    return TournamentMapper.toDomain(saved);
   }
 
   async delete(id: number): Promise<void> {
-    const orm = await this.tournamentRepo.findOne({ where: { id } });
-
-    if (!orm) {
-      throw new Error(`El torneo con id ${id} no existe`);
+    const result = await this.tournamentRepo.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`Tournament with id ${id} not found`);
     }
-
-    await this.tournamentRepo.remove(orm);
   }
 
   async addTeamToTournament(
     tournamentId: number,
     teamId: number,
-  ): Promise<Tournament> {
+  ): Promise<Tournament | null> {
     const orm = await this.tournamentRepo.findOne({
       where: { id: tournamentId },
       relations: { teams: true },
@@ -84,13 +91,14 @@ export class TournamentRepository implements ITournamentRepository {
     }
 
     orm.teams.push(team);
-    return await this.tournamentRepo.save(orm);
+    const saved = await this.tournamentRepo.save(orm);
+    return TournamentMapper.toDomain(saved);
   }
 
   async removeTeamFromTournament(
     tournamentId: number,
     teamId: number,
-  ): Promise<Tournament> {
+  ): Promise<Tournament | null> {
     const orm = await this.tournamentRepo.findOne({
       where: { id: tournamentId },
       relations: { teams: true },
@@ -108,6 +116,7 @@ export class TournamentRepository implements ITournamentRepository {
     }
 
     orm.teams = orm.teams.filter((team) => team.id !== teamId);
-    return await this.tournamentRepo.save(orm);
+    const saved = await this.tournamentRepo.save(orm);
+    return TournamentMapper.toDomain(saved);
   }
 }

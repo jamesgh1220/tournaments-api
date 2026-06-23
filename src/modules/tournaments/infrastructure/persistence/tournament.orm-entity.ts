@@ -1,4 +1,3 @@
-import { Phase } from 'src/phase/entities/phase.entity';
 import { Standing } from 'src/standings/entities/standing.entity';
 import {
   Entity,
@@ -11,6 +10,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import { TeamOrmEntity } from 'src/modules/teams/infrastructure/persistence/team.orm-entity';
+import { PhaseOrmEntity } from 'src/modules/phase/infrastructure/persistence/phase.orm-entity';
 
 @Entity('tournaments')
 export class TournamentOrmEntity {
@@ -43,8 +43,8 @@ export class TournamentOrmEntity {
   })
   teams: TeamOrmEntity[];
 
-  @OneToMany(() => Phase, (phase) => phase.tournament)
-  phases: Phase[];
+  @OneToMany(() => PhaseOrmEntity, (phase) => phase.tournament)
+  phases: PhaseOrmEntity[];
 
   @OneToMany(() => Standing, (standing) => standing.tournament)
   standings: Standing[];

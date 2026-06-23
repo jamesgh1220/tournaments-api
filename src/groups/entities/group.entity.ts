@@ -1,5 +1,3 @@
-import { Match } from 'src/matches/entities/match.entity';
-import { Phase } from 'src/phase/entities/phase.entity';
 import { Standing } from 'src/standings/entities/standing.entity';
 import {
   Entity,
@@ -13,6 +11,8 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { TeamOrmEntity } from 'src/modules/teams/infrastructure/persistence/team.orm-entity';
+import { PhaseOrmEntity } from 'src/modules/phase/infrastructure/persistence/phase.orm-entity';
+import { MatchOrmEntity } from 'src/modules/matches/infrastructure/persistence/match.orm-entity';
 
 @Entity('groups')
 export class Group {
@@ -22,8 +22,8 @@ export class Group {
   @Column()
   name: string;
 
-  @ManyToOne(() => Phase, (phase) => phase.groups)
-  phase: Phase;
+  @ManyToOne(() => PhaseOrmEntity, (phase) => phase.groups)
+  phase: PhaseOrmEntity;
 
   @ManyToMany(() => TeamOrmEntity, team => team.groups)
   @JoinTable({
@@ -39,8 +39,8 @@ export class Group {
   })
   teams: TeamOrmEntity[];
 
-  @OneToMany(() => Match, (match) => match.group)
-  matches: Match[];
+  @OneToMany(() => MatchOrmEntity, (match) => match.group)
+  matches: MatchOrmEntity[];
 
   @OneToMany(() => Standing, (standing) => standing.group)
   standings: Standing[];
