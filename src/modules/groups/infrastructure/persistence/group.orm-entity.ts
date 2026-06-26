@@ -27,7 +27,7 @@ export class GroupOrmEntity {
   @ManyToOne(() => PhaseOrmEntity, (phase) => phase.groups)
   phase: PhaseOrmEntity;
 
-  @ManyToMany(() => TeamOrmEntity, team => team.groups)
+  @ManyToMany(() => TeamOrmEntity, (team) => team.groups)
   @JoinTable({
     name: 'group_teams',
     joinColumn: {

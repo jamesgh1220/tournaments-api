@@ -7,6 +7,8 @@ import {
   Param,
   Patch,
   Delete,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { TeamDto } from '../../application/dto/team.dto';
 import { TeamsService } from '../../application/services/teams.service';
@@ -38,6 +40,7 @@ export class TeamsController {
   }
 
   @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('id') id: number) {
     return this.teamsService.remove(+id);
   }

@@ -7,6 +7,8 @@ import {
   Param,
   Body,
   UseGuards,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { JwtAuthGuard } from 'common/guards/jwt-auth-guard';
 import { MatchesService } from '../../application/services/matches.service';
@@ -38,6 +40,7 @@ export class MatchesController {
   }
 
   @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('id') id: number) {
     return this.matchService.remove(+id);
   }

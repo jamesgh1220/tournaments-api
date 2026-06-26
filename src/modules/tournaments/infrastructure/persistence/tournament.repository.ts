@@ -50,7 +50,8 @@ export class TournamentRepository implements ITournamentRepository {
 
     if (data.name !== undefined) orm.name = data.name;
     if (data.state !== undefined) orm.state = data.state;
-    if (data.configuration !== undefined) orm.configuration = data.configuration;
+    if (data.configuration !== undefined)
+      orm.configuration = data.configuration;
     if (data.startDate !== undefined) orm.startDate = data.startDate;
 
     const saved = await this.tournamentRepo.save(orm);

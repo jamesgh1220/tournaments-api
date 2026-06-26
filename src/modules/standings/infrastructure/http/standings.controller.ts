@@ -6,6 +6,8 @@ import {
   Param,
   Body,
   UseGuards,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { JwtAuthGuard } from 'common/guards/jwt-auth-guard';
 import { StandingsService } from '../../application/services/standings.service';
@@ -27,6 +29,7 @@ export class StandingsController {
   }
 
   @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('id') id: number) {
     return this.standingService.remove(+id);
   }

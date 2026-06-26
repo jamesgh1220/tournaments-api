@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { StandingDto } from '../dto/standing.dto';
 import { Standing } from '../../domain/entities/standing.entity';
 import type { IStandingRepository } from '../../domain/interfaces/standing-repository.interface';
@@ -10,8 +10,8 @@ export class UpdateStandingUseCase {
     private readonly standingRepo: IStandingRepository,
   ) {}
 
-  async execute(id: number, dto: StandingDto): Promise<Standing | null> {
-    return await this.standingRepo.update(id, {
+  async execute(id: number, dto: StandingDto): Promise<Standing> {
+    const updated = await this.standingRepo.update(id, {
       played: dto.played,
       wins: dto.wins,
       draws: dto.draws,
@@ -24,5 +24,9 @@ export class UpdateStandingUseCase {
       groupId: dto.groupId,
       teamId: dto.teamId,
     });
+    if (!updated) {
+      throw new NotFoundException(`Standing con id ${id} no encontrado`);
+    }
+    return updated;
   }
 }

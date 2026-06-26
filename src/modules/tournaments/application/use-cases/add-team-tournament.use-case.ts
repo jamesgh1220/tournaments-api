@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Tournament } from '../../domain/entities/tournament.entity';
 import type { ITournamentRepository } from '../../domain/interfaces/tournament-repository.interface';
 
@@ -9,11 +9,17 @@ export class AddTeamTournamentUseCase {
     private readonly tournamentRepo: ITournamentRepository,
   ) {}
 
-  async execute(
-    tournamentId: number,
-    teamId: number,
-  ): Promise<Tournament | null> {
+  async execute(tournamentId: number, teamId: number): Promise<Tournament> {
     // TODO: validar que no se agreguen mas equipos de los establecidos (value-object)
-    return await this.tournamentRepo.addTeamToTournament(tournamentId, teamId);
+    const tournament = await this.tournamentRepo.addTeamToTournament(
+      tournamentId,
+      teamId,
+    );
+    if (!tournament) {
+      throw new NotFoundException(
+        `Torneo con id ${tournamentId} no encontrado`,
+      );
+    }
+    return tournament;
   }
 }

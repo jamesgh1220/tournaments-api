@@ -7,6 +7,8 @@ import {
   Param,
   Body,
   UseGuards,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { JwtAuthGuard } from 'common/guards/jwt-auth-guard';
 import { GroupsService } from '../../application/services/groups.service';
@@ -38,6 +40,7 @@ export class GroupsController {
   }
 
   @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('id') id: number) {
     return this.groupService.remove(+id);
   }

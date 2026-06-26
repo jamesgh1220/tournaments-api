@@ -7,6 +7,8 @@ import {
   Get,
   Patch,
   Param,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { JwtAuthGuard } from 'common/guards/jwt-auth-guard';
 import { TournamentsService } from '../../application/services/tournaments.service';
@@ -38,6 +40,7 @@ export class TournamentsController {
   }
 
   @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('id') id: number) {
     return this.tournamentService.remove(+id);
   }
@@ -48,6 +51,7 @@ export class TournamentsController {
   }
 
   @Delete(':id/teams/:teamId')
+  @HttpCode(HttpStatus.NO_CONTENT)
   removeTeamFromTournament(
     @Param('id') id: number,
     @Param('teamId') teamId: number,

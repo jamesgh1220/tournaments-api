@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import type { ITournamentRepository } from '../../domain/interfaces/tournament-repository.interface';
 import { Tournament } from '../../domain/entities/tournament.entity';
 
@@ -9,8 +9,11 @@ export class FindByIdTournamentUseCase {
     private readonly tournamentRepo: ITournamentRepository,
   ) {}
 
-  async execute(id: number): Promise<Tournament | null> {
+  async execute(id: number): Promise<Tournament> {
     const tournament = await this.tournamentRepo.findById(id);
+    if (!tournament) {
+      throw new NotFoundException(`Torneo con id ${id} no encontrado`);
+    }
     return tournament;
   }
 }
