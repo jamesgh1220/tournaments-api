@@ -7,8 +7,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TeamsModule } from './modules/teams/teams.module';
 import { PhaseModule } from './modules/phase/phase.module';
-import { GroupsModule } from './groups/groups.module';
-import { Group } from './groups/entities/group.entity';
+import { GroupsModule } from './modules/groups/groups.module';
 import { MatchesModule } from './modules/matches/matches.module';
 import { StandingsModule } from './modules/standings/standings.module';
 import { UserOrmEntity } from './modules/users/infrastructure/persistence/user.orm-entity';
@@ -18,6 +17,7 @@ import { PhaseOrmEntity } from './modules/phase/infrastructure/persistence/phase
 import { PhaseTypeOrmEntity } from './modules/phase/infrastructure/persistence/phase-type.orm-entity';
 import { MatchOrmEntity } from './modules/matches/infrastructure/persistence/match.orm-entity';
 import { StandingOrmEntity } from './modules/standings/infrastructure/persistence/standing.orm-entity';
+import { GroupOrmEntity } from './modules/groups/infrastructure/persistence/group.orm-entity';
 
 @Module({
   imports: [
@@ -38,7 +38,7 @@ import { StandingOrmEntity } from './modules/standings/infrastructure/persistenc
           TeamOrmEntity,
           PhaseOrmEntity,
           PhaseTypeOrmEntity,
-          Group,
+          GroupOrmEntity,
           MatchOrmEntity,
           StandingOrmEntity,
         ],

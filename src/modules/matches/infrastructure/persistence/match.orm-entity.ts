@@ -1,4 +1,3 @@
-import { Group } from 'src/groups/entities/group.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -10,6 +9,7 @@ import {
 } from 'typeorm';
 import { TeamOrmEntity } from 'src/modules/teams/infrastructure/persistence/team.orm-entity';
 import { PhaseOrmEntity } from 'src/modules/phase/infrastructure/persistence/phase.orm-entity';
+import { GroupOrmEntity } from 'src/modules/groups/infrastructure/persistence/group.orm-entity';
 
 @Entity('matches')
 export class MatchOrmEntity {
@@ -23,10 +23,10 @@ export class MatchOrmEntity {
 
   @Column({ nullable: true })
   groupId?: number;
-  @ManyToOne(() => Group, (group) => group.matches, {
+  @ManyToOne(() => GroupOrmEntity, (group) => group.matches, {
     nullable: true,
   })
-  group: Group;
+  group: GroupOrmEntity;
 
   @Column()
   homeTeamId: number;

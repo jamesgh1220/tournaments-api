@@ -1,12 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Group } from 'src/groups/entities/group.entity';
 import { TeamOrmEntity } from 'src/modules/teams/infrastructure/persistence/team.orm-entity';
 import { Match } from '../../domain/entities/match.entity';
 import { MatchOrmEntity } from './match.orm-entity';
 import { MatchMapper } from './match.mapper';
 import type { IMatchRepository } from '../../domain/interfaces/match-repository.interface';
+import { GroupOrmEntity } from 'src/modules/groups/infrastructure/persistence/group.orm-entity';
 
 @Injectable()
 export class MatchRepository implements IMatchRepository {
@@ -58,7 +58,7 @@ export class MatchRepository implements IMatchRepository {
     }
     if (data.groupId !== undefined) {
       orm.groupId = data.groupId;
-      orm.group = { id: data.groupId } as Group;
+      orm.group = { id: data.groupId } as GroupOrmEntity;
     }
 
     const saved = await this.matchRepo.save(orm);

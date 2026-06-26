@@ -15,13 +15,15 @@ import { MatchOrmEntity } from 'src/modules/matches/infrastructure/persistence/m
 import { StandingOrmEntity } from 'src/modules/standings/infrastructure/persistence/standing.orm-entity';
 
 @Entity('groups')
-export class Group {
+export class GroupOrmEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
   name: string;
 
+  @Column()
+  phaseId: number;
   @ManyToOne(() => PhaseOrmEntity, (phase) => phase.groups)
   phase: PhaseOrmEntity;
 

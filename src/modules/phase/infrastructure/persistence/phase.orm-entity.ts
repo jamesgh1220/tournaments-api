@@ -7,10 +7,10 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { PhaseTypeOrmEntity } from './phase-type.orm-entity';
-import { Group } from 'src/groups/entities/group.entity';
 import { StandingOrmEntity } from 'src/modules/standings/infrastructure/persistence/standing.orm-entity';
 import { TournamentOrmEntity } from 'src/modules/tournaments/infrastructure/persistence/tournament.orm-entity';
 import { MatchOrmEntity } from 'src/modules/matches/infrastructure/persistence/match.orm-entity';
+import { GroupOrmEntity } from 'src/modules/groups/infrastructure/persistence/group.orm-entity';
 
 @Entity('phases')
 export class PhaseOrmEntity {
@@ -38,8 +38,8 @@ export class PhaseOrmEntity {
   @JoinColumn({ name: 'typeId' })
   type: PhaseTypeOrmEntity;
 
-  @OneToMany(() => Group, (group) => group.phase)
-  groups: Group[];
+  @OneToMany(() => GroupOrmEntity, (group) => group.phase)
+  groups: GroupOrmEntity[];
 
   @OneToMany(() => MatchOrmEntity, (match) => match.phase)
   matches: MatchOrmEntity[];

@@ -8,7 +8,7 @@ import { StandingMapper } from './standing.mapper';
 import { TournamentOrmEntity } from 'src/modules/tournaments/infrastructure/persistence/tournament.orm-entity';
 import { PhaseOrmEntity } from 'src/modules/phase/infrastructure/persistence/phase.orm-entity';
 import { TeamOrmEntity } from 'src/modules/teams/infrastructure/persistence/team.orm-entity';
-import { Group } from 'src/groups/entities/group.entity';
+import { GroupOrmEntity } from 'src/modules/groups/infrastructure/persistence/group.orm-entity';
 
 @Injectable()
 export class StandingRepository implements IStandingRepository {
@@ -47,7 +47,7 @@ export class StandingRepository implements IStandingRepository {
 
     if (data.groupId) {
       orm.groupId = data.groupId;
-      orm.group = { id: data.groupId } as Group;
+      orm.group = { id: data.groupId } as GroupOrmEntity;
     }
 
     if (data.teamId) {
