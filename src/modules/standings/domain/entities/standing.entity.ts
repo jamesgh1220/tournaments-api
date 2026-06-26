@@ -1,3 +1,5 @@
+import { Team } from "src/modules/teams/domain/entities/teams.entity";
+
 export class Standing {
   id?: number;
 
@@ -10,8 +12,9 @@ export class Standing {
   points: number;
   tournamentId: number;
   phaseId: number;
-  groupId: number;
   teamId: number;
+  team: Team;
+  groupId?: number;
 
   static create(
     played: number,
@@ -23,8 +26,8 @@ export class Standing {
     points: number,
     tournamentId: number,
     phaseId: number,
-    groupId: number,
     teamId: number,
+    groupId?: number,
   ) {
     const standing = new Standing();
     standing.played = played;
@@ -36,8 +39,8 @@ export class Standing {
     standing.points = points;
     standing.tournamentId = tournamentId;
     standing.phaseId = phaseId;
-    standing.groupId = groupId;
     standing.teamId = teamId;
+    standing.groupId = groupId;
 
     return standing;
   }

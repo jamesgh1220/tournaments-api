@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, In } from 'typeorm';
 import { Standing } from '../../domain/entities/standing.entity';
 import { StandingOrmEntity } from './standing.orm-entity';
 import type { IStandingRepository } from '../../domain/interfaces/standing-repository.interface';
@@ -21,6 +21,21 @@ export class StandingRepository implements IStandingRepository {
     const ormEntity = StandingMapper.toOrm(standing);
     const saved = await this.standingRepo.save(ormEntity);
     return StandingMapper.toDomain(saved);
+  }
+
+  async createMany(standings: Standing[]): Promise<Standing[]> {
+    const orm = standings.map(StandingMapper.toOrm);
+    const saved = await this.standingRepo.save(orm);
+    const standingsWithRelations = await this.standingRepo.find({
+      where: {
+        id: In(saved.map((s) => s.id)),
+      },
+      relations: {
+        team: true,
+      },
+    });
+
+    return standingsWithRelations.map(StandingMapper.toDomain);
   }
 
   async update(id: number, data: Partial<Standing>): Promise<Standing | null> {

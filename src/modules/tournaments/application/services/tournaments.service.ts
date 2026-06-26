@@ -11,7 +11,7 @@ import { RemoveTeamFromTournamentUseCase } from './../use-cases/remove-team-from
 import { GetTeamsTournamentPhaseUseCase } from './../use-cases/get-teams-tournament-phase.use-case';
 import { GenerateFixtureTournamentPhaseUseCase } from '../use-cases/generate-fixture-tournament.use-case';
 import { SaveFixtureTournamentUseCase } from '../use-cases/save-fixture-tournament.use-case';
-// import { TournamentEngine } from '../../domain/services/tournament-engine';
+import { CreateInitialStandingUseCase } from '../use-cases/create-initial-standing.use-case';
 
 @Injectable()
 export class TournamentsService {
@@ -26,6 +26,7 @@ export class TournamentsService {
     private readonly getTeamsTournamentPhaseUseCase: GetTeamsTournamentPhaseUseCase,
     private readonly generateFixtureTournamentPhaseUseCase: GenerateFixtureTournamentPhaseUseCase,
     private readonly saveFixtureTournamentUseCase: SaveFixtureTournamentUseCase,
+    private readonly createInitialStandingUseCase: CreateInitialStandingUseCase,
   ) {}
 
   async find(): Promise<Tournament[] | []> {
@@ -66,17 +67,34 @@ export class TournamentsService {
   }
 
   async generateFixture(tournamentId: number, phaseId: number) {
+    // Obtener equipos participantes en la fase activa
     const teamsOfActivePhase =
       await this.getTeamsTournamentPhaseUseCase.execute(tournamentId, phaseId);
 
     if (teamsOfActivePhase) {
+      // Partidos generados para la fase activa
+      const teamOfPhase = teamsOfActivePhase?.teams;
+      const phaseType = teamsOfActivePhase?.type?.name;
       const matches = this.generateFixtureTournamentPhaseUseCase.execute(
         phaseId,
-        teamsOfActivePhase.type.name,
-        teamsOfActivePhase.teams,
+        phaseType,
+        teamOfPhase,
       );
 
-      return await this.saveFixtureTournamentUseCase.execute(matches.matches);
+      // Guardar partidos
+      const fixture = await this.saveFixtureTournamentUseCase.execute(
+        matches.matches,
+      );
+
+      // Tabla de posiciones inicial con valores en 0
+      const standing = await this.createInitialStandingUseCase.execute(
+        tournamentId,
+        phaseId,
+        teamOfPhase,
+        // Por ahora no se envia groupId, mientras se hacen los otros tipos de torneos
+      );
+
+      return { fixture, standing };
     }
 
     return [];

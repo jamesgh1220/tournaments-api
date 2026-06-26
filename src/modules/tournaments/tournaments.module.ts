@@ -21,6 +21,9 @@ import { GenerateFixtureTournamentPhaseUseCase } from './application/use-cases/g
 import { SaveFixtureTournamentUseCase } from './application/use-cases/save-fixture-tournament.use-case';
 import { MatchRepository } from '../matches/infrastructure/persistence/match.repository';
 import { MatchOrmEntity } from '../matches/infrastructure/persistence/match.orm-entity';
+import { CreateInitialStandingUseCase } from './application/use-cases/create-initial-standing.use-case';
+import { StandingRepository } from '../standings/infrastructure/persistence/standing.repository';
+import { StandingOrmEntity } from '../standings/infrastructure/persistence/standing.orm-entity';
 
 @Module({
   imports: [
@@ -29,6 +32,7 @@ import { MatchOrmEntity } from '../matches/infrastructure/persistence/match.orm-
       TeamOrmEntity,
       PhaseOrmEntity,
       MatchOrmEntity,
+      StandingOrmEntity,
     ]),
     MatchesModule,
   ],
@@ -45,6 +49,7 @@ import { MatchOrmEntity } from '../matches/infrastructure/persistence/match.orm-
     GetTeamsTournamentPhaseUseCase,
     GenerateFixtureTournamentPhaseUseCase,
     SaveFixtureTournamentUseCase,
+    CreateInitialStandingUseCase,
     {
       provide: 'ITournamentRepository',
       useClass: TournamentRepository,
@@ -56,6 +61,10 @@ import { MatchOrmEntity } from '../matches/infrastructure/persistence/match.orm-
     {
       provide: 'IMatchRepository',
       useClass: MatchRepository,
+    },
+    {
+      provide: 'IStandingRepository',
+      useClass: StandingRepository,
     },
   ],
   controllers: [TournamentsController],

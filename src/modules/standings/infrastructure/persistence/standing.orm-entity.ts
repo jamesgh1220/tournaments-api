@@ -19,7 +19,7 @@ export class StandingOrmEntity {
   @ManyToOne(() => PhaseOrmEntity, (phase) => phase.standings)
   phase: PhaseOrmEntity;
 
-  @Column()
+  @Column({ nullable: true })
   groupId: number;
   @ManyToOne(() => GroupOrmEntity, (group) => group.standings, {
     nullable: true,

@@ -15,6 +15,12 @@ export class StandingMapper {
     standing.phaseId = orm.phaseId;
     standing.groupId = orm.groupId;
     standing.teamId = orm.teamId;
+    if (orm.team) {
+      standing.team = {
+        id: orm.team.id,
+        name: orm.team.name,
+      };
+    }
 
     return standing;
   }
@@ -33,7 +39,9 @@ export class StandingMapper {
     orm.points = domain.points;
     orm.tournamentId = domain.tournamentId;
     orm.phaseId = domain.phaseId;
-    orm.groupId = domain.groupId;
+    if (domain.groupId != null) {
+      orm.groupId = domain.groupId;
+    }
     orm.teamId = domain.teamId;
     return orm;
   }
