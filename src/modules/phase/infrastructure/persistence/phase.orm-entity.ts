@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 import { PhaseTypeOrmEntity } from './phase-type.orm-entity';
 import { Group } from 'src/groups/entities/group.entity';
-import { Standing } from 'src/standings/entities/standing.entity';
+import { StandingOrmEntity } from 'src/modules/standings/infrastructure/persistence/standing.orm-entity';
 import { TournamentOrmEntity } from 'src/modules/tournaments/infrastructure/persistence/tournament.orm-entity';
 import { MatchOrmEntity } from 'src/modules/matches/infrastructure/persistence/match.orm-entity';
 
@@ -44,6 +44,6 @@ export class PhaseOrmEntity {
   @OneToMany(() => MatchOrmEntity, (match) => match.phase)
   matches: MatchOrmEntity[];
 
-  @OneToMany(() => Standing, (standing) => standing.phase)
-  standings: Standing[];
+  @OneToMany(() => StandingOrmEntity, (standing) => standing.phase)
+  standings: StandingOrmEntity[];
 }

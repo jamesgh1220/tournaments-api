@@ -1,4 +1,3 @@
-import { Standing } from 'src/standings/entities/standing.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -13,6 +12,7 @@ import {
 import { TeamOrmEntity } from 'src/modules/teams/infrastructure/persistence/team.orm-entity';
 import { PhaseOrmEntity } from 'src/modules/phase/infrastructure/persistence/phase.orm-entity';
 import { MatchOrmEntity } from 'src/modules/matches/infrastructure/persistence/match.orm-entity';
+import { StandingOrmEntity } from 'src/modules/standings/infrastructure/persistence/standing.orm-entity';
 
 @Entity('groups')
 export class Group {
@@ -42,8 +42,8 @@ export class Group {
   @OneToMany(() => MatchOrmEntity, (match) => match.group)
   matches: MatchOrmEntity[];
 
-  @OneToMany(() => Standing, (standing) => standing.group)
-  standings: Standing[];
+  @OneToMany(() => StandingOrmEntity, (standing) => standing.group)
+  standings: StandingOrmEntity[];
 
   @CreateDateColumn()
   createdAt: Date;

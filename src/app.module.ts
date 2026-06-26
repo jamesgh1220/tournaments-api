@@ -10,14 +10,14 @@ import { PhaseModule } from './modules/phase/phase.module';
 import { GroupsModule } from './groups/groups.module';
 import { Group } from './groups/entities/group.entity';
 import { MatchesModule } from './modules/matches/matches.module';
-import { StandingsModule } from './standings/standings.module';
-import { Standing } from './standings/entities/standing.entity';
+import { StandingsModule } from './modules/standings/standings.module';
 import { UserOrmEntity } from './modules/users/infrastructure/persistence/user.orm-entity';
 import { TournamentOrmEntity } from './modules/tournaments/infrastructure/persistence/tournament.orm-entity';
 import { TeamOrmEntity } from './modules/teams/infrastructure/persistence/team.orm-entity';
 import { PhaseOrmEntity } from './modules/phase/infrastructure/persistence/phase.orm-entity';
 import { PhaseTypeOrmEntity } from './modules/phase/infrastructure/persistence/phase-type.orm-entity';
 import { MatchOrmEntity } from './modules/matches/infrastructure/persistence/match.orm-entity';
+import { StandingOrmEntity } from './modules/standings/infrastructure/persistence/standing.orm-entity';
 
 @Module({
   imports: [
@@ -40,7 +40,7 @@ import { MatchOrmEntity } from './modules/matches/infrastructure/persistence/mat
           PhaseTypeOrmEntity,
           Group,
           MatchOrmEntity,
-          Standing,
+          StandingOrmEntity,
         ],
         synchronize: true,
       }),

@@ -1,4 +1,3 @@
-import { Standing } from 'src/standings/entities/standing.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -9,6 +8,7 @@ import {
   JoinTable,
   OneToMany,
 } from 'typeorm';
+import { StandingOrmEntity } from 'src/modules/standings/infrastructure/persistence/standing.orm-entity';
 import { TeamOrmEntity } from 'src/modules/teams/infrastructure/persistence/team.orm-entity';
 import { PhaseOrmEntity } from 'src/modules/phase/infrastructure/persistence/phase.orm-entity';
 
@@ -46,6 +46,6 @@ export class TournamentOrmEntity {
   @OneToMany(() => PhaseOrmEntity, (phase) => phase.tournament)
   phases: PhaseOrmEntity[];
 
-  @OneToMany(() => Standing, (standing) => standing.tournament)
-  standings: Standing[];
+  @OneToMany(() => StandingOrmEntity, (standing) => standing.tournament)
+  standings: StandingOrmEntity[];
 }
