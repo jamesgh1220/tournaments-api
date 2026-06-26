@@ -1,3 +1,4 @@
+import { Team } from 'src/modules/teams/domain/entities/teams.entity';
 import { Tournament } from '../entities/tournament.entity';
 
 export interface ITournamentRepository {
@@ -15,4 +16,5 @@ export interface ITournamentRepository {
     tournamentId: number,
     teamId: number,
   ): Promise<Tournament | null>;
+  getTeamsOfTournamentLeague(tournamentId: number): Promise<Team[]>;
 }

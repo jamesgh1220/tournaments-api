@@ -6,6 +6,8 @@ import { TournamentOrmEntity } from './tournament.orm-entity';
 import { TournamentMapper } from './tournament.mapper';
 import type { ITournamentRepository } from '../../domain/interfaces/tournament-repository.interface';
 import { TeamOrmEntity } from 'src/modules/teams/infrastructure/persistence/team.orm-entity';
+import { Team } from 'src/modules/teams/domain/entities/teams.entity';
+import { TeamMapper } from 'src/modules/teams/infrastructure/persistence/team.mapper';
 
 @Injectable()
 export class TournamentRepository implements ITournamentRepository {
@@ -118,5 +120,16 @@ export class TournamentRepository implements ITournamentRepository {
     orm.teams = orm.teams.filter((team) => team.id !== teamId);
     const saved = await this.tournamentRepo.save(orm);
     return TournamentMapper.toDomain(saved);
+  }
+
+  async getTeamsOfTournamentLeague(tournamentId: number): Promise<Team[]> {
+    const tournament = await this.tournamentRepo.findOne({
+      where: { id: tournamentId },
+      relations: {
+        teams: true,
+      },
+    });
+
+    return tournament?.teams.map(TeamMapper.toDomain) ?? [];
   }
 }

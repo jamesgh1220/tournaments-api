@@ -1,3 +1,5 @@
+import { PhaseTypeInterface } from '../interfaces/phase-type.interace';
+
 export class Phase {
   id?: number;
   name: string;
@@ -5,6 +7,7 @@ export class Phase {
   order_number?: number;
   tournamentId?: number;
   typeId?: number;
+  type: PhaseTypeInterface;
 
   static create(
     name: string,

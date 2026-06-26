@@ -53,6 +53,20 @@ export class PhaseRepository implements IPhaseRepository {
     return ormEntities ? ormEntities.map(PhaseMapper.toDomain) : [];
   }
 
+  async findActiveByTournamentId(tournamentId: number): Promise<Phase | null> {
+    const ormEntity = await this.phaseRepo.findOne({
+      where: {
+        tournamentId,
+        status: 'IN_PROGRESS',
+      },
+      relations: {
+        type: true,
+      },
+    });
+
+    return ormEntity ? PhaseMapper.toDomain(ormEntity) : null;
+  }
+
   async update(id: number, data: Partial<Phase>): Promise<Phase | null> {
     const orm = await this.phaseRepo.findOneBy({ id });
     if (!orm) return null;

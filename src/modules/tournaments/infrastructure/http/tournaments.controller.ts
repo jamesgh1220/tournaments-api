@@ -55,8 +55,8 @@ export class TournamentsController {
     return this.tournamentService.removeTeamFromTournament(+id, +teamId);
   }
 
-  @Post(':id/generate-fixture')
-  generateFixture(@Param('id') id: number) {
-    return this.tournamentService.generateFixture(+id);
+  @Post(':id/phases/:phaseId/generate-fixture')
+  generateFixture(@Param('id') id: number, @Param('phaseId') phaseId: number) {
+    return this.tournamentService.generateFixture(+id, +phaseId);
   }
 }

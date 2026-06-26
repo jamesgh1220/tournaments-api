@@ -8,7 +8,10 @@ import { FindByIdTournamentUseCase } from '../use-cases/find-by-id-tournament.us
 import { DeleteTournamentUseCase } from '../use-cases/delete-tournament.use-case';
 import { AddTeamTournamentUseCase } from './../use-cases/add-team-tournament.use-case';
 import { RemoveTeamFromTournamentUseCase } from './../use-cases/remove-team-from-tournament.use-case';
-import { TournamentEngine } from '../../domain/services/tournament-engine';
+import { GetTeamsTournamentPhaseUseCase } from './../use-cases/get-teams-tournament-phase.use-case';
+import { GenerateFixtureTournamentPhaseUseCase } from '../use-cases/generate-fixture-tournament.use-case';
+import { SaveFixtureTournamentUseCase } from '../use-cases/save-fixture-tournament.use-case';
+// import { TournamentEngine } from '../../domain/services/tournament-engine';
 
 @Injectable()
 export class TournamentsService {
@@ -20,6 +23,9 @@ export class TournamentsService {
     private readonly deleteTournamentUseCase: DeleteTournamentUseCase,
     private readonly addTeamTournamentUseCase: AddTeamTournamentUseCase,
     private readonly removeTeamFromTournamentUseCase: RemoveTeamFromTournamentUseCase,
+    private readonly getTeamsTournamentPhaseUseCase: GetTeamsTournamentPhaseUseCase,
+    private readonly generateFixtureTournamentPhaseUseCase: GenerateFixtureTournamentPhaseUseCase,
+    private readonly saveFixtureTournamentUseCase: SaveFixtureTournamentUseCase,
   ) {}
 
   async find(): Promise<Tournament[] | []> {
@@ -59,7 +65,20 @@ export class TournamentsService {
     );
   }
 
-  async generateFixture(id: number) {
-    
+  async generateFixture(tournamentId: number, phaseId: number) {
+    const teamsOfActivePhase =
+      await this.getTeamsTournamentPhaseUseCase.execute(tournamentId, phaseId);
+
+    if (teamsOfActivePhase) {
+      const matches = this.generateFixtureTournamentPhaseUseCase.execute(
+        phaseId,
+        teamsOfActivePhase.type.name,
+        teamsOfActivePhase.teams,
+      );
+
+      return await this.saveFixtureTournamentUseCase.execute(matches.matches);
+    }
+
+    return [];
   }
 }

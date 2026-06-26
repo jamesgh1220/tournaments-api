@@ -1,8 +1,5 @@
-export interface MatchFixture {
-  homeTeam: number;
-  awayTeam: number;
-}
+import { Match } from 'src/modules/matches/domain/entities/match.entity';
 
 export interface Fixture {
-  matches: MatchFixture[];
+  matches: Match[];
 }

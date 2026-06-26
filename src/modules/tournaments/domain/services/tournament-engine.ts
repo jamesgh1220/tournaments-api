@@ -1,22 +1,18 @@
 import { Team } from 'src/modules/teams/domain/entities/teams.entity';
 import { Fixture } from 'src/interfaces/fixture/match-fixture';
 
-interface ConfigFixture {
-  type: string;
-}
-
 export class TournamentEngine {
-  generateFixture(config: ConfigFixture, teams: Team[]) {
-    switch (config.type) {
+  generateFixture(phaseId: number, configType: string, teams: Team[]) {
+    switch (configType) {
       case 'LEAGUE':
-        return this.engineLeague(teams);
+        return this.engineLeague(teams, phaseId);
 
       default:
-        throw new Error(`Tournament type ${config.type} not supported`);
+        throw new Error(`Tournament type ${configType} not supported`);
     }
   }
 
-  engineLeague(teams: Team[]): Fixture {
+  engineLeague(teams: Team[], phaseId: number): Fixture {
     const fixture: Fixture = {
       matches: [],
     };
@@ -25,12 +21,21 @@ export class TournamentEngine {
       const singleTeam = teams[i];
       for (let j = 1; j < allTeams.length; j++) {
         fixture.matches.push({
-          homeTeam: singleTeam.id!,
-          awayTeam: allTeams[j].id!,
+          homeScore: 0,
+          awayScore: 0,
+          status: 'TO_COME',
+          // scheduledAt: new Date(),
+          homeTeamId: singleTeam.id!,
+          awayTeamId: allTeams[j].id!,
+          phaseId,
         });
         fixture.matches.push({
-          homeTeam: allTeams[j].id!,
-          awayTeam: singleTeam.id!,
+          homeScore: 0,
+          awayScore: 0,
+          status: 'TO_COME',
+          homeTeamId: allTeams[j].id!,
+          awayTeamId: singleTeam.id!,
+          phaseId,
         });
       }
       allTeams = allTeams.filter((team) => team.id !== singleTeam.id!);

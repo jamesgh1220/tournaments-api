@@ -10,6 +10,8 @@ export class PhaseMapper {
     phase.order_number = orm.order_number;
     phase.tournamentId = orm.tournamentId;
     phase.typeId = orm.typeId;
+    phase.type = orm.type;
+
     return phase;
   }
 
