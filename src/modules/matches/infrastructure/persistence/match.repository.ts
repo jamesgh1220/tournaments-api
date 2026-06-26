@@ -27,6 +27,13 @@ export class MatchRepository implements IMatchRepository {
     return MatchMapper.toDomain(saved);
   }
 
+  async createMany(matches: Match[]): Promise<Match[]> {
+    const orm = matches.map(MatchMapper.toOrm);
+    orm.forEach((m) => (m.scheduledAt = new Date()));
+    const saved = await this.matchRepo.save(orm); // save acepta array
+    return saved.map(MatchMapper.toDomain);
+  }
+
   async findById(id: number): Promise<Match | null> {
     const ormEntity = await this.matchRepo.findOneBy({ id });
     return ormEntity ? MatchMapper.toDomain(ormEntity) : null;

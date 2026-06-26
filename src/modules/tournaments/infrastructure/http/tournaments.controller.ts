@@ -28,30 +28,35 @@ export class TournamentsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: number) {
     return this.tournamentService.findById(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() dto: TournamentDto) {
+  update(@Param('id') id: number, @Body() dto: TournamentDto) {
     return this.tournamentService.update(+id, dto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: number) {
     return this.tournamentService.remove(+id);
   }
 
   @Post(':id/teams')
-  addTeamToTournament(@Param('id') id: string, @Body('teamId') teamId: number) {
+  addTeamToTournament(@Param('id') id: number, @Body('teamId') teamId: number) {
     return this.tournamentService.addTeamToTournament(+id, +teamId);
   }
 
   @Delete(':id/teams/:teamId')
   removeTeamFromTournament(
-    @Param('id') id: string,
-    @Param('teamId') teamId: string,
+    @Param('id') id: number,
+    @Param('teamId') teamId: number,
   ) {
     return this.tournamentService.removeTeamFromTournament(+id, +teamId);
+  }
+
+  @Post(':id/generate-fixture')
+  generateFixture(@Param('id') id: number) {
+    return this.tournamentService.generateFixture(+id);
   }
 }

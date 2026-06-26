@@ -8,6 +8,7 @@ import { FindByIdTournamentUseCase } from '../use-cases/find-by-id-tournament.us
 import { DeleteTournamentUseCase } from '../use-cases/delete-tournament.use-case';
 import { AddTeamTournamentUseCase } from './../use-cases/add-team-tournament.use-case';
 import { RemoveTeamFromTournamentUseCase } from './../use-cases/remove-team-from-tournament.use-case';
+import { TournamentEngine } from '../../domain/services/tournament-engine';
 
 @Injectable()
 export class TournamentsService {
@@ -56,5 +57,9 @@ export class TournamentsService {
       tournamentId,
       teamId,
     );
+  }
+
+  async generateFixture(id: number) {
+    
   }
 }

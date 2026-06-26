@@ -6,22 +6,25 @@ import {
   Delete,
   Param,
   Body,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from 'common/guards/jwt-auth-guard';
 import { MatchesService } from '../../application/services/matches.service';
 import { MatchDto } from '../../application/dto/match.dto';
 
+@UseGuards(JwtAuthGuard)
 @Controller('matches')
 export class MatchesController {
   constructor(private readonly matchService: MatchesService) {}
 
   @Get()
   findAll() {
-    // return this.matchService.findAll();
+    return this.matchService.find();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    // return this.matchService.findOne(+id);
+    return this.matchService.findById(+id);
   }
 
   @Post()
@@ -30,12 +33,12 @@ export class MatchesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() dto: MatchDto) {
+  update(@Param('id') id: number, @Body() dto: MatchDto) {
     return this.matchService.update(+id, dto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: number) {
     return this.matchService.remove(+id);
   }
 }
